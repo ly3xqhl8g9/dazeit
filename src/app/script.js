@@ -522,3 +522,79 @@ function init() {
 
 init();
 
+
+
+
+function expandGiftDrawer() {
+    let giftCryptoExpand = document.getElementById("gift-crypto-expand");
+    let giftCardCrypto = document.getElementById("gift-card-crypto");
+    let giftCardDrawer = document.getElementById("gift-card-drawer");
+
+    giftCryptoExpand.addEventListener("click", () => {
+        if (giftCardCrypto.style.height == "450px") {
+            giftCryptoExpand.innerHTML = "&#9660;";
+            giftCardCrypto.style.height = "200px";
+            giftCardDrawer.style.display = "none";
+        } else {
+            giftCryptoExpand.innerHTML = "&#9650;";
+            giftCardCrypto.style.height = "450px";
+            giftCardDrawer.style.display = "block";
+            // window.scrollTo(0,document.body.scrollHeight);
+        }
+    });
+}
+
+expandGiftDrawer()
+
+
+function copyCryptosOnClick() {
+    function copyBtcAdressOnClick() {
+        let btc = document.getElementById("btc-address");
+        let address = "1CKoEnMU3Hy1UiWfJVBTruVSmrLvhDkXd6"
+        copyCryptoAddress(btc, address)
+    }
+
+    function copyEthAdressOnClick() {
+        let eth = document.getElementById("eth-address");
+        let address = "0x91936fc5A7e13ae96273E371fD3407B0F3ABc553"
+        copyCryptoAddress(eth, address)
+    }
+
+    function copyBchAdressOnClick() {
+        let bch = document.getElementById("bch-address");
+        let address = "qrlar2grfap9n86gfrm6z69yw56ezv35zyts7ufxjv"
+        copyCryptoAddress(bch, address)
+    }
+
+    function copyCryptoAddress(crypto, address) {
+        crypto.addEventListener("click", () => {
+            let range = document.createRange();
+            range.selectNode(crypto);
+            let selection = window.getSelection()
+            selection.removeAllRanges();
+            selection.addRange(range);
+
+            try {  
+                if (crypto.innerHTML == address) {
+                    document.execCommand('copy');
+                }
+                crypto.innerHTML = `<span class="address-copy">address<br>copied</span>`;
+                setTimeout(function() {
+                    crypto.innerText = address;
+                }, 2000);
+            } catch(err) {
+                crypto.innerHTML = `<span class="address-copy">address<br>couldn't be copied</span>`;
+                setTimeout(function() {
+                    crypto.innerText = address;
+                }, 2000);
+            }
+            window.getSelection().removeAllRanges(); 
+        });
+    }
+
+    copyBtcAdressOnClick();
+    copyEthAdressOnClick();
+    copyBchAdressOnClick();
+}
+
+copyCryptosOnClick()

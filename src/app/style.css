@@ -191,6 +191,7 @@ CONTENT
     font-size: 18px;
 }
 
+
 .gift-wrapper {
     display: flex;
     flex-direction: row;
@@ -204,9 +205,46 @@ CONTENT
     height: 200px;
     margin: 30px;
     padding: 30px;
-    background-color: hsl(200, 30%, 10%);
+    background-color: rgb(35, 10, 40);
     overflow-wrap: break-word;
 }
+
+.gift-card p {
+    margin-bottom: 30px;
+}
+
+#gift-crypto-expand {
+    cursor: pointer;
+    user-select: none;
+    color: hsl(200, 30%, 40%);
+}
+
+#gift-crypto-expand:hover {
+    color: hsl(0, 0%, 100%);
+}
+
+#gift-card-drawer {
+    display: none;
+}
+
+#btc-address,
+#eth-address,
+#bch-address {
+    color: hsl(200, 30%, 40%);
+    cursor: pointer;
+}
+
+#btc-address:hover,
+#eth-address:hover,
+#bch-address:hover {
+    color: hsl(0, 0%, 100%);
+}
+
+.address-copy {
+    user-select: none;
+}
+
+
 
 /* 
 
