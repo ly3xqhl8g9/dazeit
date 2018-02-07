@@ -14,8 +14,6 @@ body {
     position: relative;
     margin: 0;
     overscroll-behavior-y: none;
-    /*background-size: cover;*/
-    /*overflow: hidden;*/
     padding-bottom: 3rem;
     min-height: 100%;
     font-size: 14px;
