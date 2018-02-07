@@ -126,62 +126,61 @@ function copyCryptosOnClick() {
 //////////////////
 // LOGIC
 (function() {
-    var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    let months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
     Date.prototype.getMonthName = function() {
-        return months[ this.getMonth() ];
+        return months[this.getMonth()];
     };
 })();
 
-let dateDay = document.querySelector('input[name="date-day"]');
-let dateMonth = document.querySelector('input[name="date-month"]');
-let dateYear = document.querySelector('input[name="date-year"]');
 let dateHours = document.querySelector('input[name="date-hours"]');
 let dateMinutes = document.querySelector('input[name="date-minutes"]');
 let dateSeconds = document.querySelector('input[name="date-seconds"]');
+let dateDay = document.querySelector('input[name="date-day"]');
+let dateMonth = document.querySelector('input[name="date-month"]');
+let dateYear = document.querySelector('input[name="date-year"]');
 
 let currentDate = new Date();
 
 
-
-var HOLOCENE_ADD = 0
-var holocene = document.getElementById("holocene-mark");
-
 holocene.addEventListener('click', function() {
-    HOLOCENE_ADD = holocene.checked ? 10000 : 0;
-    console.log(HOLOCENE_ADD);
-    init()
+    HOLOCENE_ADD = 10000;
+    setDateValues(HOLOCENE_ADD);
 })
 
 
 function calcRationalTime(UNIX_MILLISECONDS) {
-    // var UNIX_MILLISECONDS = (new Date()).getTime();
-    var UNIX_START_YEAR = HOLOCENE_ADD + 1970;
+    let holocene = document.getElementById("holocene-mark");
+    let HOLOCENE_ADD = holocene.checked ? 10000 : 0;
 
-    var SIDEREAL_YEAR = 31558149.504;
-    var MILLISECOND_TO_MILLIBLINK = 3.1687536047487507;
+    let UNIX_START_YEAR = 1970;
 
-    var UNIX_MILLIBLINKS = UNIX_MILLISECONDS * MILLISECOND_TO_MILLIBLINK;
+    let SIDEREAL_YEAR_IN_SECONDS = 31558149.504;
+    let MILLISECOND_TO_MILLIBLINK = 3.1687536047487507;
 
-    var MILLIBLINKS_IN_CYLIPSE = 100000000000;
-    var MILLIBLINKS_IN_COURSE  =  10000000000;
-    var MILLIBLINKS_IN_STAGE   =   1000000000;
-    var MILLIBLINKS_IN_STANCE  =    250000000;
-    var MILLIBLINKS_IN_TIDE    =     10000000;
-    var MILLIBLINKS_IN_MOMENT  =       100000;
-    var MILLIBLINKS_IN_BLINK   =         1000;
+    let UNIX_MILLIBLINKS = UNIX_MILLISECONDS * MILLISECOND_TO_MILLIBLINK;
+    // console.log(UNIX_MILLIBLINKS);
+
+    let MILLIBLINKS_IN_CYLIPSE = 100000000000;
+    let MILLIBLINKS_IN_COURSE  =  10000000000;
+    let MILLIBLINKS_IN_STAGE   =   1000000000;
+    let MILLIBLINKS_IN_STANCE  =    250000000;
+    let MILLIBLINKS_IN_TIDE    =     10000000;
+    let MILLIBLINKS_IN_MOMENT  =       100000;
+    let MILLIBLINKS_IN_BLINK   =         1000;
 
 
-    var currentCylipse = UNIX_START_YEAR + Math.round(UNIX_MILLIBLINKS / MILLIBLINKS_IN_CYLIPSE);
-    var milliblinksCurrentCylipse = UNIX_MILLIBLINKS - 
+    let currentCylipse = UNIX_START_YEAR + Math.round(UNIX_MILLIBLINKS / MILLIBLINKS_IN_CYLIPSE);
+    console.log(currentCylipse);
+    let milliblinksCurrentCylipse = UNIX_MILLIBLINKS - 
                                         (currentCylipse - UNIX_START_YEAR) * MILLIBLINKS_IN_CYLIPSE;
 
-    var currentCourse = Math.ceil(milliblinksCurrentCylipse / MILLIBLINKS_IN_COURSE);
-    var currentStage = (Math.ceil(milliblinksCurrentCylipse / MILLIBLINKS_IN_STAGE)) % 11;
-    var currentStance = (Math.ceil(milliblinksCurrentCylipse / MILLIBLINKS_IN_STANCE)) % 5;
-    var currentTide = (Math.ceil(milliblinksCurrentCylipse / MILLIBLINKS_IN_TIDE)) % 101;
-    var currentMoment = (Math.ceil(milliblinksCurrentCylipse / MILLIBLINKS_IN_MOMENT)) % 101;
-    var currentBlink = (Math.ceil(milliblinksCurrentCylipse / MILLIBLINKS_IN_BLINK)) % 101;
+    let currentCourse = Math.ceil(milliblinksCurrentCylipse / MILLIBLINKS_IN_COURSE);
+    let currentStage = (Math.ceil(milliblinksCurrentCylipse / MILLIBLINKS_IN_STAGE)) % 11;
+    let currentStance = (Math.ceil(milliblinksCurrentCylipse / MILLIBLINKS_IN_STANCE)) % 5;
+    let currentTide = (Math.ceil(milliblinksCurrentCylipse / MILLIBLINKS_IN_TIDE)) % 101;
+    let currentMoment = (Math.ceil(milliblinksCurrentCylipse / MILLIBLINKS_IN_MOMENT)) % 101;
+    let currentBlink = (Math.ceil(milliblinksCurrentCylipse / MILLIBLINKS_IN_BLINK)) % 101;
 
     // console.log(`UNIX Milliseconds: ${UNIX_MILLISECONDS}`);
     // console.log(`UNIX Milliblinks: ${UNIX_MILLIBLINKS}`);
@@ -190,7 +189,7 @@ function calcRationalTime(UNIX_MILLISECONDS) {
     // console.log(`Current Cylipse: ${currentCylipse}`);
 
     // console.log(`Current Course: ${currentCourse}`);
-    var currentCourseString = "";
+    let currentCourseString = "";
     switch (currentCourse) {
         case 1:
             currentCourseString = "1. Socrates";
@@ -238,7 +237,7 @@ function calcRationalTime(UNIX_MILLISECONDS) {
     }
 
     // console.log(`Current Stage: ${currentStage}`);
-    var currentStageString = "";
+    let currentStageString = "";
     switch (currentStage) {
         case 1:
             currentStageString = "1. Galileo";
@@ -286,7 +285,7 @@ function calcRationalTime(UNIX_MILLISECONDS) {
     }
 
     // console.log(`Current Stance: ${currentStance}`);
-    var currentStanceString = "";
+    let currentStanceString = "";
     switch (currentStance) {
         case 1:
             currentStanceString = "1. Set";
@@ -314,7 +313,7 @@ function calcRationalTime(UNIX_MILLISECONDS) {
     // console.log(`Current Blink: ${currentBlink}`);
 
 
-    // var rationalDateString = "Cylipse " + currentCylipse + "<br> Course " + currentCourseString +
+    // let rationalDateString = "Cylipse " + currentCylipse + "<br> Course " + currentCourseString +
                              // "<br> Stage " + currentStageString + "<br> Stance " + currentStanceString +
                              // "<br> Tide " + currentTide + "<br> Moment " + currentMoment +
                              // "<br> Blink " + currentBlink;
@@ -337,15 +336,19 @@ function calcRationalTime(UNIX_MILLISECONDS) {
 
 //////////////////
 // Set values
-function setDateValues() {
+function setDateValues(HEyear = null) {
     let currentDate = new Date();
 
-    dateDay.value = currentDate.getDate();
-    dateMonth.value = currentDate.getMonthName();
-    dateYear.value = currentDate.getFullYear();
-    dateHours.value = currentDate.getHours();
+    dateHours.value = currentDate.getUTCHours();
     dateMinutes.value = currentDate.getMinutes();
     dateSeconds.value = currentDate.getSeconds();
+    dateDay.value = currentDate.getDate();
+    dateMonth.value = currentDate.getMonthName();
+    if (HEyear == null) {
+        dateYear.value = currentDate.getFullYear();
+    } else {
+        dateYear.value = HEyear + currentDate.getFullYear();        
+    }
 
     dateEndth(dateEndthEl);
     pluralization();
@@ -518,8 +521,10 @@ function conversion() {
     let formedDateString = `${dateMonth.value} ${dateDay.value}, 
                             ${dateYear.value} 
                             ${dateHours.value}:${dateMinutes.value}:${dateSeconds.value}`;
+    console.log(formedDateString);
 
     getUnixMilliseconds = new Date(formedDateString).getTime();
+    console.log(getUnixMilliseconds);
 
     let convertedTime = calcRationalTime(getUnixMilliseconds);
 
@@ -530,7 +535,7 @@ function conversion() {
                               <span class="rational-time-text">Stage</span> ${convertedTime.stageString},
                               <span class="rational-time-text">Course</span> ${convertedTime.courseString},
                               <span class="rational-time-text">Cylipse</span> ${convertedTime.cylipse}
-                            `
+                            `;
 
     let rationalTimeDiv = document.getElementById("rational-time");
 
