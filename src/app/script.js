@@ -1,10 +1,158 @@
+//////////////////
+// TABS
+function setTabs() {
+    let tabAbout = document.getElementById("tab-about");
+    let tabConversion = document.getElementById("tab-conversion");
+    let tabGift = document.getElementById("tab-gift");
+
+    let contentAbout = document.getElementById("content-about");
+    let contentConversion = document.getElementById("content-conversion");
+    let contentGift = document.getElementById("content-gift");
+
+
+    tabAbout.addEventListener("click", function() {
+        setActiveClassToTab(this);
+
+        contentAbout.style.display = "block";
+        contentConversion.style.display = "none";
+        contentGift.style.display = "none";
+    })
+
+    tabConversion.addEventListener("click", function() {
+        setActiveClassToTab(this);
+        setDateValues();
+
+        contentConversion.style.display = "block";
+        contentAbout.style.display = "none";
+        contentGift.style.display = "none";
+    })
+
+    tabGift.addEventListener("click", function() {
+        setActiveClassToTab(this);
+
+        contentGift.style.display = "block";
+        contentAbout.style.display = "none";
+        contentConversion.style.display = "none";
+    })
+}
+
+function setActiveClassToTab(element) {
+    let ulTabs = document.getElementById("ul-tabs");
+
+    for (let i = 0; i < ulTabs.children.length; i++) {
+        let currentTab = ulTabs.children[i];
+        currentTab.classList.remove("active");
+    }
+
+    element.classList.add("active");
+}
+
+
+
+//////////////////
+// Gift
+function expandGiftDrawer() {
+    let giftCryptoExpand = document.getElementById("gift-crypto-expand");
+    let giftCardCrypto = document.getElementById("gift-card-crypto");
+    let giftCardDrawer = document.getElementById("gift-card-drawer");
+
+    giftCryptoExpand.addEventListener("click", () => {
+        if (giftCardCrypto.style.height == "450px") {
+            giftCryptoExpand.innerHTML = "&#9660;";
+            giftCardCrypto.style.height = "200px";
+            giftCardDrawer.style.display = "none";
+        } else {
+            giftCryptoExpand.innerHTML = "&#9650;";
+            giftCardCrypto.style.height = "450px";
+            giftCardDrawer.style.display = "block";
+            // window.scrollTo(0,document.body.scrollHeight);
+        }
+    });
+}
+
+
+function copyCryptosOnClick() {
+    function copyBtcAdressOnClick() {
+        let btc = document.getElementById("btc-address");
+        let address = "1CKoEnMU3Hy1UiWfJVBTruVSmrLvhDkXd6"
+        copyCryptoAddress(btc, address)
+    }
+
+    function copyEthAdressOnClick() {
+        let eth = document.getElementById("eth-address");
+        let address = "0x91936fc5A7e13ae96273E371fD3407B0F3ABc553"
+        copyCryptoAddress(eth, address)
+    }
+
+    function copyBchAdressOnClick() {
+        let bch = document.getElementById("bch-address");
+        let address = "qrlar2grfap9n86gfrm6z69yw56ezv35zyts7ufxjv"
+        copyCryptoAddress(bch, address)
+    }
+
+    function copyCryptoAddress(crypto, address) {
+        crypto.addEventListener("click", () => {
+            let range = document.createRange();
+            range.selectNode(crypto);
+            let selection = window.getSelection()
+            selection.removeAllRanges();
+            selection.addRange(range);
+
+            try {  
+                if (crypto.innerHTML == address) {
+                    document.execCommand('copy');
+                }
+                crypto.innerHTML = `<span class="address-copy">address<br>copied</span>`;
+                setTimeout(function() {
+                    crypto.innerText = address;
+                }, 2000);
+            } catch(err) {
+                crypto.innerHTML = `<span class="address-copy">address<br>couldn't be copied</span>`;
+                setTimeout(function() {
+                    crypto.innerText = address;
+                }, 2000);
+            }
+            window.getSelection().removeAllRanges(); 
+        });
+    }
+
+    copyBtcAdressOnClick();
+    copyEthAdressOnClick();
+    copyBchAdressOnClick();
+}
+
+
+
+//////////////////
 // LOGIC
+(function() {
+    var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+    Date.prototype.getMonthName = function() {
+        return months[ this.getMonth() ];
+    };
+})();
+
+let dateDay = document.querySelector('input[name="date-day"]');
+let dateMonth = document.querySelector('input[name="date-month"]');
+let dateYear = document.querySelector('input[name="date-year"]');
+let dateHours = document.querySelector('input[name="date-hours"]');
+let dateMinutes = document.querySelector('input[name="date-minutes"]');
+let dateSeconds = document.querySelector('input[name="date-seconds"]');
+
+let currentDate = new Date();
+
+
+
 var HOLOCENE_ADD = 0
-var holocene = document.getElementById("holocene");
+var holocene = document.getElementById("holocene-mark");
 
 holocene.addEventListener('click', function() {
     HOLOCENE_ADD = holocene.checked ? 10000 : 0;
+    console.log(HOLOCENE_ADD);
+    init()
 })
+
 
 function calcRationalTime(UNIX_MILLISECONDS) {
     // var UNIX_MILLISECONDS = (new Date()).getTime();
@@ -186,46 +334,6 @@ function calcRationalTime(UNIX_MILLISECONDS) {
 }
 
 
-// Set HTML
-// function setHTML() {
-//     var conventionalTime = document.getElementById("conventional-time");
-//     var rationalTime = document.getElementById("rational-time");
-
-//     var d = new Date();
-//     var conventionalDateString = d.getDate() + "-" + (d.getMonth()+1) + "-" + (d.getFullYear() + HOLOCENE_ADD) + " " + 
-//                                  d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
-
-//     conventionalTime.innerText = conventionalDateString;
-
-//     rationalTime.innerHTML = calcRationalTime();
-// }
-
-// setHTML();
-// setInterval(setHTML, 315);
-
-
-
-
-////////////
-// LOGIC
-////////////
-(function() {
-    var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-
-    Date.prototype.getMonthName = function() {
-        return months[ this.getMonth() ];
-    };
-})();
-
-let dateDay = document.querySelector('input[name="date-day"]');
-let dateMonth = document.querySelector('input[name="date-month"]');
-let dateYear = document.querySelector('input[name="date-year"]');
-let dateHours = document.querySelector('input[name="date-hours"]');
-let dateMinutes = document.querySelector('input[name="date-minutes"]');
-let dateSeconds = document.querySelector('input[name="date-seconds"]');
-
-let currentDate = new Date();
-
 
 //////////////////
 // Set values
@@ -243,6 +351,7 @@ function setDateValues() {
     pluralization();
     conversion()
 }
+
 
 
 //////////////////
@@ -280,6 +389,7 @@ function detectChangeDateEndth() {
         dateEndth(dateEndthElement);
     })
 }
+
 
 
 ///////////////////////
@@ -354,6 +464,7 @@ function detectChangeHoursMinutesSeconds() {
 }
 
 
+
 ////////////////////////////////////////////
 // Pluralization of Hours, Minutes, Seconds
 function pluralization() {
@@ -401,57 +512,7 @@ function dateReset() {
 
 
 
-///////
-// TABS
-function setTabs() {
-    let tabAbout = document.getElementById("tab-about");
-    let tabConversion = document.getElementById("tab-conversion");
-    let tabGift = document.getElementById("tab-gift");
-
-    let contentAbout = document.getElementById("content-about");
-    let contentConversion = document.getElementById("content-conversion");
-    let contentGift = document.getElementById("content-gift");
-
-
-    tabAbout.addEventListener("click", function() {
-        setActiveClassToTab(this);
-
-        contentAbout.style.display = "block";
-        contentConversion.style.display = "none";
-        contentGift.style.display = "none";
-    })
-
-    tabConversion.addEventListener("click", function() {
-        setActiveClassToTab(this);
-        setDateValues();
-
-        contentConversion.style.display = "block";
-        contentAbout.style.display = "none";
-        contentGift.style.display = "none";
-    })
-
-    tabGift.addEventListener("click", function() {
-        setActiveClassToTab(this);
-
-        contentGift.style.display = "block";
-        contentAbout.style.display = "none";
-        contentConversion.style.display = "none";
-    })
-}
-
-function setActiveClassToTab(element) {
-    let ulTabs = document.getElementById("ul-tabs");
-
-    for (let i = 0; i < ulTabs.children.length; i++) {
-        let currentTab = ulTabs.children[i];
-        currentTab.classList.remove("active");
-    }
-
-    element.classList.add("active");
-}
-
-
-
+///////////////////////
 // CONVERSION
 function conversion() {
     let formedDateString = `${dateMonth.value} ${dateDay.value}, 
@@ -475,6 +536,7 @@ function conversion() {
 
     rationalTimeDiv.innerHTML = rationalDateString;
 }
+
 
 
 ///////////////////////
@@ -518,83 +580,8 @@ function init() {
     detectChangeHoursMinutesSeconds();
     dateReset();
     setTabs();
+    expandGiftDrawer();
+    copyCryptosOnClick();
 }
 
 init();
-
-
-
-
-function expandGiftDrawer() {
-    let giftCryptoExpand = document.getElementById("gift-crypto-expand");
-    let giftCardCrypto = document.getElementById("gift-card-crypto");
-    let giftCardDrawer = document.getElementById("gift-card-drawer");
-
-    giftCryptoExpand.addEventListener("click", () => {
-        if (giftCardCrypto.style.height == "450px") {
-            giftCryptoExpand.innerHTML = "&#9660;";
-            giftCardCrypto.style.height = "200px";
-            giftCardDrawer.style.display = "none";
-        } else {
-            giftCryptoExpand.innerHTML = "&#9650;";
-            giftCardCrypto.style.height = "450px";
-            giftCardDrawer.style.display = "block";
-            // window.scrollTo(0,document.body.scrollHeight);
-        }
-    });
-}
-
-expandGiftDrawer()
-
-
-function copyCryptosOnClick() {
-    function copyBtcAdressOnClick() {
-        let btc = document.getElementById("btc-address");
-        let address = "1CKoEnMU3Hy1UiWfJVBTruVSmrLvhDkXd6"
-        copyCryptoAddress(btc, address)
-    }
-
-    function copyEthAdressOnClick() {
-        let eth = document.getElementById("eth-address");
-        let address = "0x91936fc5A7e13ae96273E371fD3407B0F3ABc553"
-        copyCryptoAddress(eth, address)
-    }
-
-    function copyBchAdressOnClick() {
-        let bch = document.getElementById("bch-address");
-        let address = "qrlar2grfap9n86gfrm6z69yw56ezv35zyts7ufxjv"
-        copyCryptoAddress(bch, address)
-    }
-
-    function copyCryptoAddress(crypto, address) {
-        crypto.addEventListener("click", () => {
-            let range = document.createRange();
-            range.selectNode(crypto);
-            let selection = window.getSelection()
-            selection.removeAllRanges();
-            selection.addRange(range);
-
-            try {  
-                if (crypto.innerHTML == address) {
-                    document.execCommand('copy');
-                }
-                crypto.innerHTML = `<span class="address-copy">address<br>copied</span>`;
-                setTimeout(function() {
-                    crypto.innerText = address;
-                }, 2000);
-            } catch(err) {
-                crypto.innerHTML = `<span class="address-copy">address<br>couldn't be copied</span>`;
-                setTimeout(function() {
-                    crypto.innerText = address;
-                }, 2000);
-            }
-            window.getSelection().removeAllRanges(); 
-        });
-    }
-
-    copyBtcAdressOnClick();
-    copyEthAdressOnClick();
-    copyBchAdressOnClick();
-}
-
-copyCryptosOnClick()

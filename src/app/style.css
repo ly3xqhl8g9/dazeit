@@ -1,3 +1,6 @@
+/* ------------------
+-- GENERAL
+------------------ */
 html {
     width: 100%;
     height: 100%;
@@ -86,8 +89,9 @@ footer h1 {
 
 
 
-/*-------*/
-/* TABS */
+/* ------------------
+-- TABS
+------------------ */
 .tabs {
     display: flex;
     align-items: center;
@@ -131,11 +135,9 @@ footer h1 {
 
 
 
-/*
-
-*/
-
-
+/* ------------------
+-- CONTAINER
+------------------ */
 .container {
     margin: 0 auto;
     padding: 50px;
@@ -151,18 +153,11 @@ footer h1 {
     }
 }
 
-.rt-image {
-    margin: 30px auto;
-    height: 150px;
-}
 
 
-
-
-/* 
-CONTENT
-*/
-
+/* ------------------
+-- CONTENT
+------------------ */
 .content {
     margin-top: 50px;
 }
@@ -176,13 +171,11 @@ CONTENT
     display: none;
 }
 
-
 #content-about {
     font-size: 18px;
     line-height: 1.8;
     text-align: justify;
 }
-
 
 #content-gift {
     text-align: center;
@@ -190,6 +183,51 @@ CONTENT
 }
 
 
+
+/* ------------------
+-- CONTENT-ABOUT
+------------------ */
+.span-accent {
+    background-color: hsl(200, 30%, 40%);
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.content-about-center {
+    margin-left: 20%;
+}
+
+@media (max-width: 800px) {
+    .content-about-center {
+        margin-left: 10%;
+    }    
+}
+
+.content-about-center p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.responsive-image {
+    width: 100%;
+}
+
+.large-image {
+    font-size: 12px;
+    text-align: center;
+    margin-top: 0px;
+    margin-bottom: 30px;
+}
+
+.large-image:last-child {
+    margin-bottom: 0px;
+}
+
+
+
+/* ------------------
+-- CONTENT-GIFT
+------------------ */
 .gift-wrapper {
     display: flex;
     flex-direction: row;
@@ -244,10 +282,9 @@ CONTENT
 
 
 
-/* 
-
-*/
-
+/* ------------------
+-- CONTENT-CONVERSION
+------------------ */
 #conventional-time {
     line-height: 50px;
 }
@@ -318,6 +355,10 @@ CONTENT
     }
 }
 
+.rt-image {
+    margin: 30px auto;
+    height: 150px;
+}
 
 #rational-time {
     text-align: center;
@@ -330,7 +371,6 @@ CONTENT
     margin-left: 7px;
     font-size: 14px;
 }
-
 
 #holocene {
     display: block;
@@ -393,47 +433,4 @@ CONTENT
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
-}
-
-
-
-
-
-
-/*ABOUT*/
-.span-accent {
-    background-color: hsl(200, 30%, 40%);
-    padding-left: 3px;
-    padding-right: 3px;
-}
-
-.content-about-center {
-    margin-left: 20%;
-}
-
-@media (max-width: 800px) {
-    .content-about-center {
-        margin-left: 10%;
-    }    
-}
-
-
-.content-about-center p {
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.responsive-image {
-    width: 100%;
-}
-
-.large-image {
-    font-size: 12px;
-    text-align: center;
-    margin-top: 0px;
-    margin-bottom: 30px;
-}
-
-.large-image:last-child {
-    margin-bottom: 0px;
 }
