@@ -3,11 +3,9 @@
 function setTabs() {
     let tabAbout = document.getElementById("tab-about");
     let tabConversion = document.getElementById("tab-conversion");
-    let tabGift = document.getElementById("tab-gift");
 
     let contentAbout = document.getElementById("content-about");
     let contentConversion = document.getElementById("content-conversion");
-    let contentGift = document.getElementById("content-gift");
 
 
     tabAbout.addEventListener("click", function() {
@@ -15,8 +13,7 @@ function setTabs() {
 
         contentAbout.style.display = "block";
         contentConversion.style.display = "none";
-        contentGift.style.display = "none";
-    })
+    });
 
     tabConversion.addEventListener("click", function() {
         setActiveClassToTab(this);
@@ -24,16 +21,7 @@ function setTabs() {
 
         contentConversion.style.display = "block";
         contentAbout.style.display = "none";
-        contentGift.style.display = "none";
-    })
-
-    tabGift.addEventListener("click", function() {
-        setActiveClassToTab(this);
-
-        contentGift.style.display = "block";
-        contentAbout.style.display = "none";
-        contentConversion.style.display = "none";
-    })
+    });
 }
 
 function setActiveClassToTab(element) {
@@ -45,80 +33,6 @@ function setActiveClassToTab(element) {
     }
 
     element.classList.add("active");
-}
-
-
-
-//////////////////
-// Gift
-function expandGiftDrawer() {
-    let giftCryptoExpand = document.getElementById("gift-crypto-expand");
-    let giftCardCrypto = document.getElementById("gift-card-crypto");
-    let giftCardDrawer = document.getElementById("gift-card-drawer");
-
-    giftCryptoExpand.addEventListener("click", () => {
-        if (giftCardCrypto.style.height == "450px") {
-            giftCryptoExpand.innerHTML = "&#9660;";
-            giftCardCrypto.style.height = "200px";
-            giftCardDrawer.style.display = "none";
-        } else {
-            giftCryptoExpand.innerHTML = "&#9650;";
-            giftCardCrypto.style.height = "450px";
-            giftCardDrawer.style.display = "block";
-            // window.scrollTo(0,document.body.scrollHeight);
-        }
-    });
-}
-
-
-function copyCryptosOnClick() {
-    function copyBtcAdressOnClick() {
-        let btc = document.getElementById("btc-address");
-        let address = "1CKoEnMU3Hy1UiWfJVBTruVSmrLvhDkXd6"
-        copyCryptoAddress(btc, address)
-    }
-
-    function copyEthAdressOnClick() {
-        let eth = document.getElementById("eth-address");
-        let address = "0x91936fc5A7e13ae96273E371fD3407B0F3ABc553"
-        copyCryptoAddress(eth, address)
-    }
-
-    function copyBchAdressOnClick() {
-        let bch = document.getElementById("bch-address");
-        let address = "qrlar2grfap9n86gfrm6z69yw56ezv35zyts7ufxjv"
-        copyCryptoAddress(bch, address)
-    }
-
-    function copyCryptoAddress(crypto, address) {
-        crypto.addEventListener("click", () => {
-            let range = document.createRange();
-            range.selectNode(crypto);
-            let selection = window.getSelection()
-            selection.removeAllRanges();
-            selection.addRange(range);
-
-            try {  
-                if (crypto.innerHTML == address) {
-                    document.execCommand('copy');
-                }
-                crypto.innerHTML = `<span class="address-copy">address<br>copied</span>`;
-                setTimeout(function() {
-                    crypto.innerText = address;
-                }, 2000);
-            } catch(err) {
-                crypto.innerHTML = `<span class="address-copy">address<br>couldn't be copied</span>`;
-                setTimeout(function() {
-                    crypto.innerText = address;
-                }, 2000);
-            }
-            window.getSelection().removeAllRanges(); 
-        });
-    }
-
-    copyBtcAdressOnClick();
-    copyEthAdressOnClick();
-    copyBchAdressOnClick();
 }
 
 
@@ -171,8 +85,8 @@ function calcRationalTime(UNIX_MILLISECONDS) {
 
 
     let currentCylipse = UNIX_START_YEAR + Math.round(UNIX_MILLIBLINKS / MILLIBLINKS_IN_CYLIPSE);
-    console.log(currentCylipse);
-    let milliblinksCurrentCylipse = UNIX_MILLIBLINKS - 
+    // console.log(currentCylipse);
+    let milliblinksCurrentCylipse = UNIX_MILLIBLINKS -
                                         (currentCylipse - UNIX_START_YEAR) * MILLIBLINKS_IN_CYLIPSE;
 
     let currentCourse = Math.ceil(milliblinksCurrentCylipse / MILLIBLINKS_IN_COURSE);
@@ -347,7 +261,7 @@ function setDateValues(HEyear = null) {
     if (HEyear == null) {
         dateYear.value = currentDate.getFullYear();
     } else {
-        dateYear.value = HEyear + currentDate.getFullYear();        
+        dateYear.value = HEyear + currentDate.getFullYear();
     }
 
     dateEndth(dateEndthEl);
@@ -518,17 +432,17 @@ function dateReset() {
 ///////////////////////
 // CONVERSION
 function conversion() {
-    let formedDateString = `${dateMonth.value} ${dateDay.value}, 
-                            ${dateYear.value} 
+    let formedDateString = `${dateMonth.value} ${dateDay.value},
+                            ${dateYear.value}
                             ${dateHours.value}:${dateMinutes.value}:${dateSeconds.value}`;
-    console.log(formedDateString);
+    // console.log(formedDateString);
 
     getUnixMilliseconds = new Date(formedDateString).getTime();
-    console.log(getUnixMilliseconds);
+    // console.log(getUnixMilliseconds);
 
     let convertedTime = calcRationalTime(getUnixMilliseconds);
 
-    let rationalDateString = `<span class="rational-time-text">Tide</span> ${convertedTime.tide}, 
+    let rationalDateString = `<span class="rational-time-text">Tide</span> ${convertedTime.tide},
                               <span class="rational-time-text">Moment</span> ${convertedTime.moment},
                               <span class="rational-time-text">Blink</span> ${convertedTime.blink},
                               <span class="rational-time-text">Stance</span> ${convertedTime.stanceString},
@@ -585,8 +499,6 @@ function init() {
     detectChangeHoursMinutesSeconds();
     dateReset();
     setTabs();
-    expandGiftDrawer();
-    copyCryptosOnClick();
 }
 
 init();
